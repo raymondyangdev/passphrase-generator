@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passphrase Generator</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="flex flex-col h-screen">
+    <!-- Navbar -->
+    <nav class="relative container mx-auto p-6">
+        <div class="flex items-center justify-between">
+            <!-- Logo -->
+            <div class="pt-2">Passphrase Generator</div>
+
+            <!-- Navbar items -->
+            <div class="flex space-x-6">
+                <a href="https://github.com/raymondyangdev" class="hover:text-orange-600">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container flex flex-1 justify-center items-center">
+        <form class="w-full max-w-sm">
+            <div class="flex items-center py-2">
+                <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 p text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type="text" readonly>
+                <button class="rounded-full p-3 ml-3 bg-sky-500">Generate</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer class="flex">Made with love</footer>
+</body>
+
+</html>
