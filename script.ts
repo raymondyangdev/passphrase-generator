@@ -12,5 +12,10 @@ window.addEventListener('load', function () {
         return Math.floor(Math.random() * 10);
     }
 
-
+    function generateSpecialCharacter(): string {
+        const specialCharacters: string = '!@#$%^&*-_=+?';
+        return specialCharacters.charAt(
+            Math.floor(Math.random() * specialCharacters.length)
+        );
+    }
 });

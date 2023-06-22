@@ -54,4 +54,8 @@ window.addEventListener('load', function () {
     function generateRandomNumber() {
         return Math.floor(Math.random() * 10);
     }
+    function generateSpecialCharacter() {
+        var specialCharacters = '!@#$%^&*-_=+?';
+        return specialCharacters.charAt(Math.floor(Math.random() * specialCharacters.length));
+    }
 });
