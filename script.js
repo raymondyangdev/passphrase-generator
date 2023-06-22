@@ -51,4 +51,7 @@ window.addEventListener('load', function () {
             });
         });
     }
+    function generateRandomNumber() {
+        return Math.floor(Math.random() * 10);
+    }
 });

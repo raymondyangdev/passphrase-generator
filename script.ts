@@ -1,10 +1,16 @@
 window.addEventListener('load', function () {
-    async function fetchRandomWord() {
+    async function fetchRandomWord(): Promise<string> {
         const res = await fetch(
             'https://random-word-api.vercel.app/api?words=1&type=capitalized'
         );
-        const randomWord = await res.json();
+        const randomWord: JSON = await res.json();
 
         return randomWord[0];
     }
+
+    function generateRandomNumber(): number {
+        return Math.floor(Math.random() * 10);
+    }
+
+
 });
