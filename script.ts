@@ -3,7 +3,7 @@ window.addEventListener('load', function () {
         const res = await fetch(
             'https://random-word-api.vercel.app/api?words=1&type=capitalized'
         );
-        const randomWord: JSON = await res.json();
+        const randomWord: string[] = await res.json();
 
         return randomWord[0];
     }
