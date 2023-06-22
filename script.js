@@ -58,4 +58,50 @@ window.addEventListener('load', function () {
         var specialCharacters = '!@#$%^&*-_=+?';
         return specialCharacters.charAt(Math.floor(Math.random() * specialCharacters.length));
     }
+    function generateNumberOrSpecialCharacter() {
+        var randomNum = Math.floor(Math.random() * 2);
+        if (randomNum == 0) {
+            return generateRandomNumber().toString();
+        }
+        else {
+            return generateSpecialCharacter();
+        }
+    }
+    function generateRandomPassphrase() {
+        return __awaiter(this, void 0, void 0, function () {
+            var charactersRemaining, passphrase, word, maxNumAndSpecialCharLength, numAndSpecialCharLength, i;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        charactersRemaining = 16;
+                        passphrase = '';
+                        _a.label = 1;
+                    case 1:
+                        if (!(charactersRemaining > 0)) return [3 /*break*/, 3];
+                        return [4 /*yield*/, fetchRandomWord()];
+                    case 2:
+                        word = _a.sent();
+                        if (word.length > charactersRemaining) {
+                            return [3 /*break*/, 1];
+                        }
+                        passphrase += word;
+                        charactersRemaining -= word.length;
+                        maxNumAndSpecialCharLength = Math.min(charactersRemaining, 3);
+                        numAndSpecialCharLength = Math.floor(Math.random() * maxNumAndSpecialCharLength) + 1;
+                        for (i = 0; i < numAndSpecialCharLength; i++) {
+                            passphrase += generateNumberOrSpecialCharacter();
+                            charactersRemaining--;
+                        }
+                        return [3 /*break*/, 1];
+                    case 3:
+                        if (passphrase.length > 16) {
+                            passphrase = passphrase.slice(0, 16); // Slice the passphrase to fit within the limit
+                        }
+                        console.log(passphrase);
+                        return [2 /*return*/, passphrase];
+                }
+            });
+        });
+    }
+    generateRandomPassphrase();
 });
