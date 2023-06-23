@@ -60,9 +60,11 @@ window.addEventListener('load', function () {
                 break;
             }
 
-            let word: string = await getRandomWord(wordList);
-            passphrase += word;
-            charactersRemaining -= word.length;
+            const word: string = await getRandomWord(wordList);
+            if (word) {
+                passphrase += word;
+                charactersRemaining -= word.length;
+            }
 
             // Maximum of 3 character sequence
             const maxNumAndSpecialCharLength: number = Math.min(
@@ -81,11 +83,9 @@ window.addEventListener('load', function () {
             wordList = pruneWordList(wordList);
         }
 
-        if (passphrase.length > 16) {
-            passphrase = passphrase.slice(0, 16); // Slice the passphrase to fit within the limit
-        }
-
-        return passphrase;
+        return passphrase.length >= 10 && passphrase.length <= 16
+            ? passphrase
+            : null;
     }
 
     generateBtn.addEventListener('click', async function () {

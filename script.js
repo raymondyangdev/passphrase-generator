@@ -108,8 +108,10 @@ window.addEventListener('load', function () {
                         return [4 /*yield*/, getRandomWord(wordList)];
                     case 3:
                         word = _a.sent();
-                        passphrase += word;
-                        charactersRemaining -= word.length;
+                        if (word) {
+                            passphrase += word;
+                            charactersRemaining -= word.length;
+                        }
                         maxNumAndSpecialCharLength = Math.min(charactersRemaining, 3);
                         numAndSpecialCharLength = Math.floor(Math.random() * maxNumAndSpecialCharLength) + 1;
                         for (i = 0; i < numAndSpecialCharLength; i++) {
@@ -118,11 +120,9 @@ window.addEventListener('load', function () {
                         }
                         wordList = pruneWordList(wordList);
                         return [3 /*break*/, 2];
-                    case 4:
-                        if (passphrase.length > 16) {
-                            passphrase = passphrase.slice(0, 16); // Slice the passphrase to fit within the limit
-                        }
-                        return [2 /*return*/, passphrase];
+                    case 4: return [2 /*return*/, passphrase.length >= 10 && passphrase.length <= 16
+                            ? passphrase
+                            : null];
                 }
             });
         });
