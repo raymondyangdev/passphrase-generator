@@ -10,7 +10,7 @@ window.addEventListener('load', function () {
 
     async function getRandomWord(): Promise<string> {
         const wordList = await fetchWordList(100);
-        const randomIndex = Math.floor(Math.random() * wordList.length + 1);
+        const randomIndex = Math.floor(Math.random() * wordList.length - 1);
 
         return wordList[randomIndex];
     }
@@ -67,8 +67,6 @@ window.addEventListener('load', function () {
         if (passphrase.length > 16) {
             passphrase = passphrase.slice(0, 16); // Slice the passphrase to fit within the limit
         }
-
-        console.log(passphrase);
 
         return passphrase;
     }

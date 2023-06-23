@@ -59,7 +59,7 @@ window.addEventListener('load', function () {
                     case 0: return [4 /*yield*/, fetchWordList(100)];
                     case 1:
                         wordList = _a.sent();
-                        randomIndex = Math.floor(Math.random() * wordList.length + 1);
+                        randomIndex = Math.floor(Math.random() * wordList.length - 1);
                         return [2 /*return*/, wordList[randomIndex]];
                 }
             });
@@ -111,7 +111,6 @@ window.addEventListener('load', function () {
                         if (passphrase.length > 16) {
                             passphrase = passphrase.slice(0, 16); // Slice the passphrase to fit within the limit
                         }
-                        console.log(passphrase);
                         return [2 /*return*/, passphrase];
                 }
             });
