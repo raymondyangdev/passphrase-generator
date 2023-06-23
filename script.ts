@@ -44,11 +44,9 @@ window.addEventListener('load', function () {
 
     function generateNumberOrSpecialCharacter(): string {
         const randomNum: number = Math.floor(Math.random() * 2);
-        if (randomNum == 0) {
-            return generateRandomNumber().toString();
-        } else {
-            return generateSpecialCharacter();
-        }
+        return randomNum == 0
+            ? generateRandomNumber().toString()
+            : generateSpecialCharacter();
     }
 
     async function generateRandomPassphrase(): Promise<string> {
@@ -83,9 +81,24 @@ window.addEventListener('load', function () {
             wordList = pruneWordList(wordList);
         }
 
-        return passphrase.length >= 10 && passphrase.length <= 16
-            ? passphrase
-            : null;
+        return passphrase;
+    }
+
+    function passphraseIsValid(passphrase: string): boolean {
+        return (
+            containsNumbers(passphrase) &&
+            containsSpecialCharacters(passphrase) &&
+            passphrase.length >= 10 &&
+            passphrase.length <= 16
+        );
+    }
+
+    function containsNumbers(passphrase: string): boolean {
+        return /[0-9]/.test(passphrase);
+    }
+
+    function containsSpecialCharacters(passphrase: string): boolean {
+        return /['!@#$%^&*-_=+?']/.test(passphrase);
     }
 
     generateBtn.addEventListener('click', async function () {

@@ -82,12 +82,9 @@ window.addEventListener('load', function () {
     }
     function generateNumberOrSpecialCharacter() {
         var randomNum = Math.floor(Math.random() * 2);
-        if (randomNum == 0) {
-            return generateRandomNumber().toString();
-        }
-        else {
-            return generateSpecialCharacter();
-        }
+        return randomNum == 0
+            ? generateRandomNumber().toString()
+            : generateSpecialCharacter();
     }
     function generateRandomPassphrase() {
         return __awaiter(this, void 0, void 0, function () {
@@ -120,12 +117,22 @@ window.addEventListener('load', function () {
                         }
                         wordList = pruneWordList(wordList);
                         return [3 /*break*/, 2];
-                    case 4: return [2 /*return*/, passphrase.length >= 10 && passphrase.length <= 16
-                            ? passphrase
-                            : null];
+                    case 4: return [2 /*return*/, passphrase];
                 }
             });
         });
+    }
+    function passphraseIsValid(passphrase) {
+        return (containsNumbers(passphrase) &&
+            containsSpecialCharacters(passphrase) &&
+            passphrase.length >= 10 &&
+            passphrase.length <= 16);
+    }
+    function containsNumbers(passphrase) {
+        return /[0-9]/.test(passphrase);
+    }
+    function containsSpecialCharacters(passphrase) {
+        return /['!@#$%^&*-_=+?']/.test(passphrase);
     }
     generateBtn.addEventListener('click', function () {
         return __awaiter(this, void 0, void 0, function () {
