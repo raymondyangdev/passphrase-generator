@@ -1,4 +1,7 @@
 window.addEventListener('load', function () {
+    const generateBtn = document.querySelector('.generate');
+    const generatedPassphraseField = document.querySelector('input');
+
     async function fetchWordList(numberOfWords: number): Promise<string> {
         const res = await fetch(
             `https://random-word-api.vercel.app/api?words=${numberOfWords}&type=capitalized`
@@ -41,35 +44,37 @@ window.addEventListener('load', function () {
 
         while (charactersRemaining > 0) {
             let word: string = await getRandomWord();
-
-            if (word.length > charactersRemaining) {
-                continue;
-            }
-
             passphrase += word;
             charactersRemaining -= word.length;
 
             // Maximum of 3 character sequence
-            let maxNumAndSpecialCharLength: number = Math.min(
+            const maxNumAndSpecialCharLength: number = Math.min(
                 charactersRemaining,
                 3
             );
 
-            let numAndSpecialCharLength: number =
+            const numAndSpecialCharLength: number =
                 Math.floor(Math.random() * maxNumAndSpecialCharLength) + 1;
 
             for (let i = 0; i < numAndSpecialCharLength; i++) {
                 passphrase += generateNumberOrSpecialCharacter();
                 charactersRemaining--;
             }
+
+            // Prune list
         }
 
         if (passphrase.length > 16) {
             passphrase = passphrase.slice(0, 16); // Slice the passphrase to fit within the limit
         }
 
+        console.log(passphrase);
+
         return passphrase;
     }
 
-    generateRandomPassphrase();
+    generateBtn.addEventListener('click', async function () {
+        const passphrase: string = await generateRandomPassphrase();
+        generatedPassphraseField.value = passphrase;
+    });
 });

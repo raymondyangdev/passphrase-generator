@@ -35,6 +35,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 window.addEventListener('load', function () {
+    var generateBtn = document.querySelector('.generate');
+    var generatedPassphraseField = document.querySelector('input');
     function fetchWordList(numberOfWords) {
         return __awaiter(this, void 0, void 0, function () {
             var res, randomWord;
@@ -95,9 +97,6 @@ window.addEventListener('load', function () {
                         return [4 /*yield*/, getRandomWord()];
                     case 2:
                         word = _a.sent();
-                        if (word.length > charactersRemaining) {
-                            return [3 /*break*/, 1];
-                        }
                         passphrase += word;
                         charactersRemaining -= word.length;
                         maxNumAndSpecialCharLength = Math.min(charactersRemaining, 3);
@@ -111,10 +110,24 @@ window.addEventListener('load', function () {
                         if (passphrase.length > 16) {
                             passphrase = passphrase.slice(0, 16); // Slice the passphrase to fit within the limit
                         }
+                        console.log(passphrase);
                         return [2 /*return*/, passphrase];
                 }
             });
         });
     }
-    generateRandomPassphrase();
+    generateBtn.addEventListener('click', function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var passphrase;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, generateRandomPassphrase()];
+                    case 1:
+                        passphrase = _a.sent();
+                        generatedPassphraseField.value = passphrase;
+                        return [2 /*return*/];
+                }
+            });
+        });
+    });
 });
