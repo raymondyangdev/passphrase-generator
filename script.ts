@@ -1,21 +1,34 @@
 window.addEventListener('load', function () {
     const generateBtn = document.querySelector('.generate');
     const generatedPassphraseField = document.querySelector('input');
+    let charactersRemaining: number = 16;
 
-    async function fetchWordList(numberOfWords: number): Promise<string> {
+    async function fetchWordList(numberOfWords: number): Promise<string[]> {
         const res = await fetch(
             `https://random-word-api.vercel.app/api?words=${numberOfWords}&type=capitalized`
         );
-        const randomWord: string = await res.json();
+        const wordList: string[] = await res.json();
 
-        return randomWord;
+        return wordList;
     }
 
-    async function getRandomWord(): Promise<string> {
-        const wordList = await fetchWordList(100);
+    async function getRandomWord(wordList: string[]): Promise<string> {
         const randomIndex = Math.floor(Math.random() * wordList.length - 1);
 
         return wordList[randomIndex];
+    }
+
+    function pruneWordList(wordList: string[]): string[] {
+        const prunedWordList: string[] = [];
+
+        for (let i = 0; i < wordList.length; i++) {
+            const word = wordList[i];
+            if (word.length < charactersRemaining) {
+                prunedWordList.push(word);
+            }
+        }
+
+        return prunedWordList;
     }
 
     function generateRandomNumber(): number {
@@ -39,11 +52,15 @@ window.addEventListener('load', function () {
     }
 
     async function generateRandomPassphrase(): Promise<string> {
-        let charactersRemaining: number = 16;
         let passphrase: string = '';
+        let wordList: string[] = await fetchWordList(500);
 
         while (charactersRemaining > 0) {
-            let word: string = await getRandomWord();
+            if (wordList.length === 0) {
+                break;
+            }
+
+            let word: string = await getRandomWord(wordList);
             passphrase += word;
             charactersRemaining -= word.length;
 
@@ -61,14 +78,12 @@ window.addEventListener('load', function () {
                 charactersRemaining--;
             }
 
-            // Prune list
+            wordList = pruneWordList(wordList);
         }
 
         if (passphrase.length > 16) {
             passphrase = passphrase.slice(0, 16); // Slice the passphrase to fit within the limit
         }
-
-        console.log(passphrase);
 
         return passphrase;
     }
@@ -76,5 +91,6 @@ window.addEventListener('load', function () {
     generateBtn.addEventListener('click', async function () {
         const passphrase: string = await generateRandomPassphrase();
         generatedPassphraseField.value = passphrase;
+        charactersRemaining = 16;
     });
 });

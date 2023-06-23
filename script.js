@@ -37,9 +37,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 window.addEventListener('load', function () {
     var generateBtn = document.querySelector('.generate');
     var generatedPassphraseField = document.querySelector('input');
+    var charactersRemaining = 16;
     function fetchWordList(numberOfWords) {
         return __awaiter(this, void 0, void 0, function () {
-            var res, randomWord;
+            var res, wordList;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, fetch("https://random-word-api.vercel.app/api?words=".concat(numberOfWords, "&type=capitalized"))];
@@ -47,25 +48,30 @@ window.addEventListener('load', function () {
                         res = _a.sent();
                         return [4 /*yield*/, res.json()];
                     case 2:
-                        randomWord = _a.sent();
-                        return [2 /*return*/, randomWord];
+                        wordList = _a.sent();
+                        return [2 /*return*/, wordList];
                 }
             });
         });
     }
-    function getRandomWord() {
+    function getRandomWord(wordList) {
         return __awaiter(this, void 0, void 0, function () {
-            var wordList, randomIndex;
+            var randomIndex;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, fetchWordList(100)];
-                    case 1:
-                        wordList = _a.sent();
-                        randomIndex = Math.floor(Math.random() * wordList.length - 1);
-                        return [2 /*return*/, wordList[randomIndex]];
-                }
+                randomIndex = Math.floor(Math.random() * wordList.length - 1);
+                return [2 /*return*/, wordList[randomIndex]];
             });
         });
+    }
+    function pruneWordList(wordList) {
+        var prunedWordList = [];
+        for (var i = 0; i < wordList.length; i++) {
+            var word = wordList[i];
+            if (word.length < charactersRemaining) {
+                prunedWordList.push(word);
+            }
+        }
+        return prunedWordList;
     }
     function generateRandomNumber() {
         return Math.floor(Math.random() * 10);
@@ -85,17 +91,22 @@ window.addEventListener('load', function () {
     }
     function generateRandomPassphrase() {
         return __awaiter(this, void 0, void 0, function () {
-            var charactersRemaining, passphrase, word, maxNumAndSpecialCharLength, numAndSpecialCharLength, i;
+            var passphrase, wordList, word, maxNumAndSpecialCharLength, numAndSpecialCharLength, i;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        charactersRemaining = 16;
                         passphrase = '';
-                        _a.label = 1;
+                        return [4 /*yield*/, fetchWordList(500)];
                     case 1:
-                        if (!(charactersRemaining > 0)) return [3 /*break*/, 3];
-                        return [4 /*yield*/, getRandomWord()];
+                        wordList = _a.sent();
+                        _a.label = 2;
                     case 2:
+                        if (!(charactersRemaining > 0)) return [3 /*break*/, 4];
+                        if (wordList.length === 0) {
+                            return [3 /*break*/, 4];
+                        }
+                        return [4 /*yield*/, getRandomWord(wordList)];
+                    case 3:
                         word = _a.sent();
                         passphrase += word;
                         charactersRemaining -= word.length;
@@ -105,12 +116,12 @@ window.addEventListener('load', function () {
                             passphrase += generateNumberOrSpecialCharacter();
                             charactersRemaining--;
                         }
-                        return [3 /*break*/, 1];
-                    case 3:
+                        wordList = pruneWordList(wordList);
+                        return [3 /*break*/, 2];
+                    case 4:
                         if (passphrase.length > 16) {
                             passphrase = passphrase.slice(0, 16); // Slice the passphrase to fit within the limit
                         }
-                        console.log(passphrase);
                         return [2 /*return*/, passphrase];
                 }
             });
@@ -125,6 +136,7 @@ window.addEventListener('load', function () {
                     case 1:
                         passphrase = _a.sent();
                         generatedPassphraseField.value = passphrase;
+                        charactersRemaining = 16;
                         return [2 /*return*/];
                 }
             });
