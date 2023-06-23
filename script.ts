@@ -1,11 +1,11 @@
 window.addEventListener('load', function () {
-    async function fetchRandomWord(): Promise<string> {
+    async function fetchWordList(numberOfWords: number): Promise<string> {
         const res = await fetch(
-            'https://random-word-api.vercel.app/api?words=1&type=capitalized'
+            `https://random-word-api.vercel.app/api?words=${numberOfWords}&type=capitalized`
         );
-        const randomWord: string[] = await res.json();
+        const randomWord: string = await res.json();
 
-        return randomWord[0];
+        return randomWord;
     }
 
     function generateRandomNumber(): number {
@@ -33,7 +33,7 @@ window.addEventListener('load', function () {
         let passphrase: string = '';
 
         while (charactersRemaining > 0) {
-            let word: string = await fetchRandomWord();
+            let word: string = await fetchWordList(100);
 
             if (word.length > charactersRemaining) {
                 continue;

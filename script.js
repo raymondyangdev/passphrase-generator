@@ -35,18 +35,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 window.addEventListener('load', function () {
-    function fetchRandomWord() {
+    function fetchWordList(numberOfWords) {
         return __awaiter(this, void 0, void 0, function () {
             var res, randomWord;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, fetch('https://random-word-api.vercel.app/api?words=1&type=capitalized')];
+                    case 0: return [4 /*yield*/, fetch("https://random-word-api.vercel.app/api?words=".concat(numberOfWords, "&type=capitalized"))];
                     case 1:
                         res = _a.sent();
                         return [4 /*yield*/, res.json()];
                     case 2:
                         randomWord = _a.sent();
-                        return [2 /*return*/, randomWord[0]];
+                        return [2 /*return*/, randomWord];
                 }
             });
         });
@@ -78,7 +78,7 @@ window.addEventListener('load', function () {
                         _a.label = 1;
                     case 1:
                         if (!(charactersRemaining > 0)) return [3 /*break*/, 3];
-                        return [4 /*yield*/, fetchRandomWord()];
+                        return [4 /*yield*/, fetchWordList(100)];
                     case 2:
                         word = _a.sent();
                         if (word.length > charactersRemaining) {
