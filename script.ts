@@ -8,6 +8,13 @@ window.addEventListener('load', function () {
         return randomWord;
     }
 
+    async function getRandomWord(): Promise<string> {
+        const wordList = await fetchWordList(100);
+        const randomIndex = Math.floor(Math.random() * wordList.length + 1);
+
+        return wordList[randomIndex];
+    }
+
     function generateRandomNumber(): number {
         return Math.floor(Math.random() * 10);
     }
@@ -33,7 +40,7 @@ window.addEventListener('load', function () {
         let passphrase: string = '';
 
         while (charactersRemaining > 0) {
-            let word: string = await fetchWordList(100);
+            let word: string = await getRandomWord();
 
             if (word.length > charactersRemaining) {
                 continue;

@@ -51,6 +51,20 @@ window.addEventListener('load', function () {
             });
         });
     }
+    function getRandomWord() {
+        return __awaiter(this, void 0, void 0, function () {
+            var wordList, randomIndex;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, fetchWordList(100)];
+                    case 1:
+                        wordList = _a.sent();
+                        randomIndex = Math.floor(Math.random() * wordList.length + 1);
+                        return [2 /*return*/, wordList[randomIndex]];
+                }
+            });
+        });
+    }
     function generateRandomNumber() {
         return Math.floor(Math.random() * 10);
     }
@@ -78,7 +92,7 @@ window.addEventListener('load', function () {
                         _a.label = 1;
                     case 1:
                         if (!(charactersRemaining > 0)) return [3 /*break*/, 3];
-                        return [4 /*yield*/, fetchWordList(100)];
+                        return [4 /*yield*/, getRandomWord()];
                     case 2:
                         word = _a.sent();
                         if (word.length > charactersRemaining) {
