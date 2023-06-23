@@ -25,7 +25,7 @@
 
     <div class="container flex flex-1 justify-center items-center">
         <div>
-            <form class="w-full max-w-sm flex flex-col justify-center">
+            <div class="w-full max-w-sm flex flex-col justify-center">
                 <div class="text-slate-300 py-2">Your randomly generated passphrase:</div>
                 <div class="flex sm:max-md:flex-col sm:max-md:gap-4">
                     <!-- Generated passphrase -->
@@ -34,7 +34,7 @@
                         type="text" id="generated-password" readonly>
                     <div class="flex sm:max-md:gap-4">
                         <button
-                            class="rounded-full px-6 ml-3 sm:max-md:ml-0 sm:max-md:py-2 bg-sky-500 text-slate-50 hover:text-slate-50">Generate</button>
+                            class="rounded-full px-6 ml-3 sm:max-md:ml-0 sm:max-md:py-2 bg-sky-500 text-slate-50 hover:text-slate-50 generate">Generate</button>
                         <button
                             class="rounded-full px-6 ml-3 sm:max-md:ml-0 sm:max-md:py-2 bg-sky-500 text-slate-50 hover:text-slate-50 copy" data-clipboard-target="#generated-password">Copy
                             to
@@ -47,7 +47,7 @@
                         </div>
                         <div class="hidden text-slate-300 sm:max-md:flex">Time to crack: <span></span></div>
                     </div>
-            </form>
+            </div>
             <div class="flex text-slate-300 py-3 sm:max-md:hidden">Time to crack: <span></span></div>
             </div>
     </div>
