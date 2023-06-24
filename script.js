@@ -109,7 +109,7 @@ window.addEventListener('load', function () {
                             passphrase += word;
                             charactersRemaining -= word.length;
                         }
-                        maxNumAndSpecialCharLength = Math.min(charactersRemaining, 3);
+                        maxNumAndSpecialCharLength = Math.max(Math.min(charactersRemaining, 3), 1);
                         numAndSpecialCharLength = Math.floor(Math.random() * maxNumAndSpecialCharLength) + 1;
                         for (i = 0; i < numAndSpecialCharLength; i++) {
                             passphrase += generateNumberOrSpecialCharacter();
@@ -117,7 +117,12 @@ window.addEventListener('load', function () {
                         }
                         wordList = pruneWordList(wordList);
                         return [3 /*break*/, 2];
-                    case 4: return [2 /*return*/, passphrase];
+                    case 4:
+                        if (!passphraseIsValid(passphrase)) {
+                            charactersRemaining = 16;
+                            return [2 /*return*/, generateRandomPassphrase()]; // Regenerate passphrase if it's invalid
+                        }
+                        return [2 /*return*/, passphrase];
                 }
             });
         });

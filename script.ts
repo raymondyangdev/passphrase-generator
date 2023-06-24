@@ -65,9 +65,9 @@ window.addEventListener('load', function () {
             }
 
             // Maximum of 3 character sequence
-            const maxNumAndSpecialCharLength: number = Math.min(
-                charactersRemaining,
-                3
+            const maxNumAndSpecialCharLength: number = Math.max(
+                Math.min(charactersRemaining, 3),
+                1
             );
 
             const numAndSpecialCharLength: number =
@@ -79,6 +79,11 @@ window.addEventListener('load', function () {
             }
 
             wordList = pruneWordList(wordList);
+        }
+
+        if (!passphraseIsValid(passphrase)) {
+            charactersRemaining = 16;
+            return generateRandomPassphrase(); // Regenerate passphrase if it's invalid
         }
 
         return passphrase;
