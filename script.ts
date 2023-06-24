@@ -44,7 +44,7 @@ window.addEventListener('load', function () {
 
     function generateNumberOrSpecialCharacter(): string {
         const randomNum: number = Math.floor(Math.random() * 2);
-        return randomNum == 0
+        return randomNum === 0
             ? generateRandomNumber().toString()
             : generateSpecialCharacter();
     }
@@ -53,11 +53,7 @@ window.addEventListener('load', function () {
         let passphrase: string = '';
         let wordList: string[] = await fetchWordList(500);
 
-        while (charactersRemaining > 0) {
-            if (wordList.length === 0) {
-                break;
-            }
-
+        while (charactersRemaining > 0 && wordList.length > 0) {
             const word: string = await getRandomWord(wordList);
             if (word) {
                 passphrase += word;
@@ -65,11 +61,10 @@ window.addEventListener('load', function () {
             }
 
             // Maximum of 3 character sequence
-            const maxNumAndSpecialCharLength: number = Math.max(
-                Math.min(charactersRemaining, 3),
-                1
+            const maxNumAndSpecialCharLength: number = Math.min(
+                charactersRemaining,
+                3
             );
-
             const numAndSpecialCharLength: number =
                 Math.floor(Math.random() * maxNumAndSpecialCharLength) + 1;
 
@@ -86,6 +81,13 @@ window.addEventListener('load', function () {
             return generateRandomPassphrase(); // Regenerate passphrase if it's invalid
         }
 
+        if (passphrase.length < 16 && charactersRemaining > 0) {
+            for (let i = 0; i <= charactersRemaining; i++) {
+                passphrase += generateNumberOrSpecialCharacter();
+                charactersRemaining--;
+            }
+        }
+
         return passphrase;
     }
 
@@ -93,8 +95,7 @@ window.addEventListener('load', function () {
         return (
             containsNumbers(passphrase) &&
             containsSpecialCharacters(passphrase) &&
-            passphrase.length >= 10 &&
-            passphrase.length <= 16
+            passphrase.length >= 10
         );
     }
 

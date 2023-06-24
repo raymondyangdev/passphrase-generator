@@ -82,13 +82,13 @@ window.addEventListener('load', function () {
     }
     function generateNumberOrSpecialCharacter() {
         var randomNum = Math.floor(Math.random() * 2);
-        return randomNum == 0
+        return randomNum === 0
             ? generateRandomNumber().toString()
             : generateSpecialCharacter();
     }
     function generateRandomPassphrase() {
         return __awaiter(this, void 0, void 0, function () {
-            var passphrase, wordList, word, maxNumAndSpecialCharLength, numAndSpecialCharLength, i;
+            var passphrase, wordList, word, maxNumAndSpecialCharLength, numAndSpecialCharLength, i, i;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -98,10 +98,7 @@ window.addEventListener('load', function () {
                         wordList = _a.sent();
                         _a.label = 2;
                     case 2:
-                        if (!(charactersRemaining > 0)) return [3 /*break*/, 4];
-                        if (wordList.length === 0) {
-                            return [3 /*break*/, 4];
-                        }
+                        if (!(charactersRemaining > 0 && wordList.length > 0)) return [3 /*break*/, 4];
                         return [4 /*yield*/, getRandomWord(wordList)];
                     case 3:
                         word = _a.sent();
@@ -109,7 +106,7 @@ window.addEventListener('load', function () {
                             passphrase += word;
                             charactersRemaining -= word.length;
                         }
-                        maxNumAndSpecialCharLength = Math.max(Math.min(charactersRemaining, 3), 1);
+                        maxNumAndSpecialCharLength = Math.min(charactersRemaining, 3);
                         numAndSpecialCharLength = Math.floor(Math.random() * maxNumAndSpecialCharLength) + 1;
                         for (i = 0; i < numAndSpecialCharLength; i++) {
                             passphrase += generateNumberOrSpecialCharacter();
@@ -122,6 +119,12 @@ window.addEventListener('load', function () {
                             charactersRemaining = 16;
                             return [2 /*return*/, generateRandomPassphrase()]; // Regenerate passphrase if it's invalid
                         }
+                        if (passphrase.length < 16 && charactersRemaining > 0) {
+                            for (i = 0; i <= charactersRemaining; i++) {
+                                passphrase += generateNumberOrSpecialCharacter();
+                                charactersRemaining--;
+                            }
+                        }
                         return [2 /*return*/, passphrase];
                 }
             });
@@ -130,8 +133,7 @@ window.addEventListener('load', function () {
     function passphraseIsValid(passphrase) {
         return (containsNumbers(passphrase) &&
             containsSpecialCharacters(passphrase) &&
-            passphrase.length >= 10 &&
-            passphrase.length <= 16);
+            passphrase.length >= 10);
     }
     function containsNumbers(passphrase) {
         return /[0-9]/.test(passphrase);
