@@ -98,7 +98,7 @@ window.addEventListener('load', function () {
     }
 
     function containsSpecialCharacters(passphrase: string): boolean {
-        return /['!@#$%^&*-_=+?']/.test(passphrase);
+        return /[!@#$%^&*\-_=+?]/.test(passphrase);
     }
 
     generateBtn.addEventListener('click', async function () {

@@ -132,7 +132,7 @@ window.addEventListener('load', function () {
         return /[0-9]/.test(passphrase);
     }
     function containsSpecialCharacters(passphrase) {
-        return /['!@#$%^&*-_=+?']/.test(passphrase);
+        return /[!@#$%^&*\-_=+?]/.test(passphrase);
     }
     generateBtn.addEventListener('click', function () {
         return __awaiter(this, void 0, void 0, function () {
