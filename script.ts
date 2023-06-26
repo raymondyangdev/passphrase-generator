@@ -1,5 +1,6 @@
 const zxcvbn = require('zxcvbn');
 window.addEventListener('load', function () {
+    displayGeneratedPassphrase();
     const generateBtn = document.querySelector('.generate');
     const generatedPassphraseField = document.querySelector('input');
     const crackTime = document.querySelector('.crack-time');
@@ -109,7 +110,7 @@ window.addEventListener('load', function () {
         return /[!@#$%^&*\-_=+?]/.test(passphrase);
     }
 
-    generateBtn.addEventListener('click', async function () {
+    async function displayGeneratedPassphrase() {
         const passphrase: string = await generateRandomPassphrase();
         const timeToCrack: string =
             zxcvbn(
@@ -117,6 +118,10 @@ window.addEventListener('load', function () {
             ).crack_times_display.offline_slow_hashing_1e4_per_second.toString();
         crackTime.innerHTML = `${timeToCrack}`;
         generatedPassphraseField.value = passphrase;
+    }
+
+    generateBtn.addEventListener('click', async function () {
+        displayGeneratedPassphrase();
         charactersRemaining = 16;
     });
 });

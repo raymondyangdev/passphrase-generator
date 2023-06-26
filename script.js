@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var zxcvbn = require('zxcvbn');
 window.addEventListener('load', function () {
+    displayGeneratedPassphrase();
     var generateBtn = document.querySelector('.generate');
     var generatedPassphraseField = document.querySelector('input');
     var crackTime = document.querySelector('.crack-time');
@@ -143,7 +144,7 @@ window.addEventListener('load', function () {
     function containsSpecialCharacters(passphrase) {
         return /[!@#$%^&*\-_=+?]/.test(passphrase);
     }
-    generateBtn.addEventListener('click', function () {
+    function displayGeneratedPassphrase() {
         return __awaiter(this, void 0, void 0, function () {
             var passphrase, timeToCrack;
             return __generator(this, function (_a) {
@@ -154,9 +155,17 @@ window.addEventListener('load', function () {
                         timeToCrack = zxcvbn(passphrase).crack_times_display.offline_slow_hashing_1e4_per_second.toString();
                         crackTime.innerHTML = "".concat(timeToCrack);
                         generatedPassphraseField.value = passphrase;
-                        charactersRemaining = 16;
                         return [2 /*return*/];
                 }
+            });
+        });
+    }
+    generateBtn.addEventListener('click', function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                displayGeneratedPassphrase();
+                charactersRemaining = 16;
+                return [2 /*return*/];
             });
         });
     });
