@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Passphrase Generator</title>
     <link rel="stylesheet" href="css/style.css">
-    <script src="script.js"></script>
+    <script src="bundle.js"></script>
 </head>
 
 <body class="flex flex-col h-screen bg-slate-900">
@@ -45,10 +45,9 @@
                                 const clipboard = new ClipboardJS('.copy');
                             </script>
                         </div>
-                        <div class="hidden text-slate-300 sm:max-md:flex">Time to crack: <span></span></div>
                     </div>
             </div>
-            <div class="flex text-slate-300 py-3 sm:max-md:hidden">Time to crack: <span></span></div>
+            <div class="flex text-slate-300 py-3">Time to crack: <span class="crack-time pl-1"></span></div>
             </div>
     </div>
 
