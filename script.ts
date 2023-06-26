@@ -1,6 +1,8 @@
+const zxcvbn = require('zxcvbn');
 window.addEventListener('load', function () {
     const generateBtn = document.querySelector('.generate');
     const generatedPassphraseField = document.querySelector('input');
+    const crackTime = document.querySelector('.crack-time');
     let charactersRemaining: number = 16;
 
     async function fetchWordList(numberOfWords: number): Promise<string[]> {
@@ -109,6 +111,11 @@ window.addEventListener('load', function () {
 
     generateBtn.addEventListener('click', async function () {
         const passphrase: string = await generateRandomPassphrase();
+        const timeToCrack: string =
+            zxcvbn(
+                passphrase
+            ).crack_times_display.offline_slow_hashing_1e4_per_second.toString();
+        crackTime.innerHTML = `${timeToCrack}`;
         generatedPassphraseField.value = passphrase;
         charactersRemaining = 16;
     });

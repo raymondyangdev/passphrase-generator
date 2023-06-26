@@ -34,9 +34,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var zxcvbn = require('zxcvbn');
 window.addEventListener('load', function () {
     var generateBtn = document.querySelector('.generate');
     var generatedPassphraseField = document.querySelector('input');
+    var crackTime = document.querySelector('.crack-time');
     var charactersRemaining = 16;
     function fetchWordList(numberOfWords) {
         return __awaiter(this, void 0, void 0, function () {
@@ -143,12 +145,14 @@ window.addEventListener('load', function () {
     }
     generateBtn.addEventListener('click', function () {
         return __awaiter(this, void 0, void 0, function () {
-            var passphrase;
+            var passphrase, timeToCrack;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, generateRandomPassphrase()];
                     case 1:
                         passphrase = _a.sent();
+                        timeToCrack = zxcvbn(passphrase).crack_times_display.offline_slow_hashing_1e4_per_second.toString();
+                        crackTime.innerHTML = "".concat(timeToCrack);
                         generatedPassphraseField.value = passphrase;
                         charactersRemaining = 16;
                         return [2 /*return*/];
