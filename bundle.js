@@ -1742,7 +1742,7 @@ window.addEventListener('load', function () {
         return specialCharacters.charAt(Math.floor(Math.random() * specialCharacters.length));
     }
     function generateNumberOrSpecialCharacter() {
-        var randomNum = Math.floor(Math.random() * 2);
+        var randomNum = Math.floor(Math.random() * 3);
         return randomNum === 0
             ? generateRandomNumber().toString()
             : generateSpecialCharacter();
@@ -1767,8 +1767,8 @@ window.addEventListener('load', function () {
                             passphrase += word;
                             charactersRemaining -= word.length;
                         }
-                        maxNumAndSpecialCharLength = Math.min(charactersRemaining, 3);
-                        numAndSpecialCharLength = Math.floor(Math.random() * maxNumAndSpecialCharLength) + 1;
+                        maxNumAndSpecialCharLength = Math.min(charactersRemaining, 5);
+                        numAndSpecialCharLength = Math.floor(Math.random() * (maxNumAndSpecialCharLength - 3 + 1)) + 3;
                         for (i = 0; i < numAndSpecialCharLength; i++) {
                             passphrase += generateNumberOrSpecialCharacter();
                             charactersRemaining--;

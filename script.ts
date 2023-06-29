@@ -46,7 +46,7 @@ window.addEventListener('load', function () {
     }
 
     function generateNumberOrSpecialCharacter(): string {
-        const randomNum: number = Math.floor(Math.random() * 2);
+        const randomNum: number = Math.floor(Math.random() * 3);
         return randomNum === 0
             ? generateRandomNumber().toString()
             : generateSpecialCharacter();
@@ -63,13 +63,17 @@ window.addEventListener('load', function () {
                 charactersRemaining -= word.length;
             }
 
-            // Maximum of 3 character sequence
+            // Maximum of 5 character sequence
             const maxNumAndSpecialCharLength: number = Math.min(
                 charactersRemaining,
-                3
+                5
             );
+
+            // Minimum of 2 character sequence
             const numAndSpecialCharLength: number =
-                Math.floor(Math.random() * maxNumAndSpecialCharLength) + 1;
+                Math.floor(
+                    Math.random() * (maxNumAndSpecialCharLength - 3 + 1)
+                ) + 3;
 
             for (let i = 0; i < numAndSpecialCharLength; i++) {
                 passphrase += generateNumberOrSpecialCharacter();
