@@ -110,7 +110,7 @@ window.addEventListener('load', function () {
                             charactersRemaining -= word.length;
                         }
                         maxNumAndSpecialCharLength = Math.min(charactersRemaining, 5);
-                        numAndSpecialCharLength = Math.floor(Math.random() * (maxNumAndSpecialCharLength - 3 + 1)) + 3;
+                        numAndSpecialCharLength = Math.min(charactersRemaining, Math.floor(Math.random() * (maxNumAndSpecialCharLength - 3 + 1)) + 3);
                         for (i = 0; i < numAndSpecialCharLength; i++) {
                             passphrase += generateNumberOrSpecialCharacter();
                             charactersRemaining--;
@@ -155,6 +155,7 @@ window.addEventListener('load', function () {
                         timeToCrack = zxcvbn(passphrase).crack_times_display.offline_slow_hashing_1e4_per_second.toString();
                         crackTime.innerHTML = "".concat(timeToCrack);
                         generatedPassphraseField.value = passphrase;
+                        console.log(passphrase.length);
                         return [2 /*return*/];
                 }
             });

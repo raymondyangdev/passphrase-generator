@@ -70,10 +70,12 @@ window.addEventListener('load', function () {
             );
 
             // Minimum of 2 character sequence
-            const numAndSpecialCharLength: number =
+            const numAndSpecialCharLength: number = Math.min(
+                charactersRemaining,
                 Math.floor(
                     Math.random() * (maxNumAndSpecialCharLength - 3 + 1)
-                ) + 3;
+                ) + 3
+            );
 
             for (let i = 0; i < numAndSpecialCharLength; i++) {
                 passphrase += generateNumberOrSpecialCharacter();
@@ -122,6 +124,7 @@ window.addEventListener('load', function () {
             ).crack_times_display.offline_slow_hashing_1e4_per_second.toString();
         crackTime.innerHTML = `${timeToCrack}`;
         generatedPassphraseField.value = passphrase;
+        console.log(passphrase.length);
     }
 
     generateBtn.addEventListener('click', async function () {
