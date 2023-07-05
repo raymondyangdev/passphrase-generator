@@ -26,7 +26,7 @@ window.addEventListener('load', function () {
 
         for (let i = 0; i < wordList.length; i++) {
             const word = wordList[i];
-            if (word.length < charactersRemaining) {
+            if (word.length <= charactersRemaining) {
                 prunedWordList.push(word);
             }
         }
@@ -38,15 +38,36 @@ window.addEventListener('load', function () {
         return Math.floor(Math.random() * 10);
     }
 
+    function shuffleString(word: string): string {
+        let chars: string[] = word.split('');
+        let currentIndex: number = chars.length,
+            randomIndex: number;
+
+        // While there remain elements to shuffle.
+        while (currentIndex != 0) {
+            // Pick a remaining element.
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+
+            // And swap it with the current element.
+            [chars[currentIndex], chars[randomIndex]] = [
+                chars[randomIndex],
+                chars[currentIndex],
+            ];
+        }
+
+        return chars.join('');
+    }
+
     function generateSpecialCharacter(): string {
-        const specialCharacters: string = '!@#$%^&*-_=+?';
+        let specialCharacters: string = '!@#$%%^^^&&&&***-_=+?';
         return specialCharacters.charAt(
             Math.floor(Math.random() * specialCharacters.length)
         );
     }
 
     function generateNumberOrSpecialCharacter(): string {
-        const randomNum: number = Math.floor(Math.random() * 3);
+        const randomNum: number = Math.floor(Math.random() * 5);
         return randomNum === 0
             ? generateRandomNumber().toString()
             : generateSpecialCharacter();
@@ -59,9 +80,9 @@ window.addEventListener('load', function () {
         while (charactersRemaining > 0 && wordList.length > 0) {
             let word: string = await getRandomWord(wordList);
             if (word) {
-                const randomIndex =
+                const randomIndex: number =
                     Math.floor(Math.random() * (word.length - 1)) + 1;
-                const letters = word.split('');
+                const letters: string[] = word.split('');
                 letters[randomIndex] = letters[randomIndex].toUpperCase();
                 word = letters.join('');
                 passphrase += word;
@@ -74,7 +95,6 @@ window.addEventListener('load', function () {
                 3
             );
 
-            // Minimum of 3 character sequence
             const numAndSpecialCharLength: number = Math.min(
                 charactersRemaining,
                 Math.floor(
@@ -90,16 +110,16 @@ window.addEventListener('load', function () {
             wordList = pruneWordList(wordList);
         }
 
-        if (!passphraseIsValid(passphrase)) {
-            charactersRemaining = 16;
-            return generateRandomPassphrase(); // Regenerate passphrase if it's invalid
-        }
-
         if (passphrase.length < 16 && charactersRemaining > 0) {
-            for (let i = 0; i <= charactersRemaining; i++) {
+            for (let i = 0; i < charactersRemaining; i++) {
                 passphrase += generateNumberOrSpecialCharacter();
                 charactersRemaining--;
             }
+        }
+
+        if (!passphraseIsValid(passphrase)) {
+            charactersRemaining = 16;
+            return generateRandomPassphrase(); // Regenerate passphrase if it's invalid
         }
 
         return passphrase;

@@ -70,7 +70,7 @@ window.addEventListener('load', function () {
         var prunedWordList = [];
         for (var i = 0; i < wordList.length; i++) {
             var word = wordList[i];
-            if (word.length < charactersRemaining) {
+            if (word.length <= charactersRemaining) {
                 prunedWordList.push(word);
             }
         }
@@ -79,12 +79,29 @@ window.addEventListener('load', function () {
     function generateRandomNumber() {
         return Math.floor(Math.random() * 10);
     }
+    function shuffleString(word) {
+        var _a;
+        var chars = word.split('');
+        var currentIndex = chars.length, randomIndex;
+        // While there remain elements to shuffle.
+        while (currentIndex != 0) {
+            // Pick a remaining element.
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+            // And swap it with the current element.
+            _a = [
+                chars[randomIndex],
+                chars[currentIndex],
+            ], chars[currentIndex] = _a[0], chars[randomIndex] = _a[1];
+        }
+        return chars.join('');
+    }
     function generateSpecialCharacter() {
-        var specialCharacters = '!@#$%^&*-_=+?';
+        var specialCharacters = '!@#$%%^^^&&&&***-_=+?';
         return specialCharacters.charAt(Math.floor(Math.random() * specialCharacters.length));
     }
     function generateNumberOrSpecialCharacter() {
-        var randomNum = Math.floor(Math.random() * 3);
+        var randomNum = Math.floor(Math.random() * 5);
         return randomNum === 0
             ? generateRandomNumber().toString()
             : generateSpecialCharacter();
@@ -122,15 +139,15 @@ window.addEventListener('load', function () {
                         wordList = pruneWordList(wordList);
                         return [3 /*break*/, 2];
                     case 4:
-                        if (!passphraseIsValid(passphrase)) {
-                            charactersRemaining = 16;
-                            return [2 /*return*/, generateRandomPassphrase()]; // Regenerate passphrase if it's invalid
-                        }
                         if (passphrase.length < 16 && charactersRemaining > 0) {
-                            for (i = 0; i <= charactersRemaining; i++) {
+                            for (i = 0; i < charactersRemaining; i++) {
                                 passphrase += generateNumberOrSpecialCharacter();
                                 charactersRemaining--;
                             }
+                        }
+                        if (!passphraseIsValid(passphrase)) {
+                            charactersRemaining = 16;
+                            return [2 /*return*/, generateRandomPassphrase()]; // Regenerate passphrase if it's invalid
                         }
                         return [2 /*return*/, passphrase];
                 }
