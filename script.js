@@ -136,7 +136,8 @@ window.addEventListener('load', function () {
     function passphraseIsValid(passphrase) {
         return (containsNumbers(passphrase) &&
             containsSpecialCharacters(passphrase) &&
-            passphrase.length >= 10);
+            passphrase.length >= 10 &&
+            passphrase.length <= 16);
     }
     function containsNumbers(passphrase) {
         return /[0-9]/.test(passphrase);

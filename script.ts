@@ -104,7 +104,8 @@ window.addEventListener('load', function () {
         return (
             containsNumbers(passphrase) &&
             containsSpecialCharacters(passphrase) &&
-            passphrase.length >= 10
+            passphrase.length >= 10 &&
+            passphrase.length <= 16
         );
     }
 
