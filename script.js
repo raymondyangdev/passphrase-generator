@@ -91,7 +91,7 @@ window.addEventListener('load', function () {
     }
     function generateRandomPassphrase() {
         return __awaiter(this, void 0, void 0, function () {
-            var passphrase, wordList, word, maxNumAndSpecialCharLength, numAndSpecialCharLength, i, i;
+            var passphrase, wordList, word, randomIndex, letters, maxNumAndSpecialCharLength, numAndSpecialCharLength, i, i;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -106,10 +106,14 @@ window.addEventListener('load', function () {
                     case 3:
                         word = _a.sent();
                         if (word) {
+                            randomIndex = Math.floor(Math.random() * (word.length - 1)) + 1;
+                            letters = word.split('');
+                            letters[randomIndex] = letters[randomIndex].toUpperCase();
+                            word = letters.join('');
                             passphrase += word;
                             charactersRemaining -= word.length;
                         }
-                        maxNumAndSpecialCharLength = Math.min(charactersRemaining, 5);
+                        maxNumAndSpecialCharLength = Math.min(charactersRemaining, 3);
                         numAndSpecialCharLength = Math.min(charactersRemaining, Math.floor(Math.random() * (maxNumAndSpecialCharLength - 3 + 1)) + 3);
                         for (i = 0; i < numAndSpecialCharLength; i++) {
                             passphrase += generateNumberOrSpecialCharacter();
@@ -156,7 +160,6 @@ window.addEventListener('load', function () {
                         timeToCrack = zxcvbn(passphrase).crack_times_display.offline_slow_hashing_1e4_per_second.toString();
                         crackTime.innerHTML = "".concat(timeToCrack);
                         generatedPassphraseField.value = passphrase;
-                        console.log(passphrase.length);
                         return [2 /*return*/];
                 }
             });

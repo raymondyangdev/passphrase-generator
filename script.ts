@@ -57,19 +57,24 @@ window.addEventListener('load', function () {
         let wordList: string[] = await fetchWordList(500);
 
         while (charactersRemaining > 0 && wordList.length > 0) {
-            const word: string = await getRandomWord(wordList);
+            let word: string = await getRandomWord(wordList);
             if (word) {
+                const randomIndex =
+                    Math.floor(Math.random() * (word.length - 1)) + 1;
+                const letters = word.split('');
+                letters[randomIndex] = letters[randomIndex].toUpperCase();
+                word = letters.join('');
                 passphrase += word;
                 charactersRemaining -= word.length;
             }
 
-            // Maximum of 5 character sequence
+            // Maximum of 3 character sequence
             const maxNumAndSpecialCharLength: number = Math.min(
                 charactersRemaining,
-                5
+                3
             );
 
-            // Minimum of 2 character sequence
+            // Minimum of 3 character sequence
             const numAndSpecialCharLength: number = Math.min(
                 charactersRemaining,
                 Math.floor(
@@ -125,7 +130,6 @@ window.addEventListener('load', function () {
             ).crack_times_display.offline_slow_hashing_1e4_per_second.toString();
         crackTime.innerHTML = `${timeToCrack}`;
         generatedPassphraseField.value = passphrase;
-        console.log(passphrase.length);
     }
 
     generateBtn.addEventListener('click', async function () {
